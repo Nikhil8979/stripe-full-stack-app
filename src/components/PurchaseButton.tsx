@@ -27,13 +27,14 @@ const PurchaseButton = ({ courseId }: { courseId: Id<"courses"> }) => {
   const createCheckoutSession = useAction(api.stripe.createCheckoutSession);
   const handlePurchase = async () => {
     if (!user) {
-      toast.error("Please log in to purchase this course");
+      return toast.error("Please log in to purchase this course");
     }
     try {
       setIsLoading(true);
       const { checkoutUrl } = await createCheckoutSession({
         courseId: courseId,
       });
+
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
       } else {

@@ -81,8 +81,9 @@ export const getUserAccess = query({
       .withIndex("by_userId_courseId", (q) =>
         q.eq("userId", args.userId).eq("courseId", args.courseId)
       )
-      .collect();
-    if (purchase.length > 0) {
+      .unique();
+
+    if (purchase) {
       return {
         hasAccess: true,
         accessType: "course",
